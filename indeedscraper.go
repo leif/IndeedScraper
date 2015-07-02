@@ -1,6 +1,7 @@
 package indeedscraper
 
 import (
+  "fmt"
   "net/http"
   "crypto/tls"
   "io/ioutil"
@@ -89,6 +90,8 @@ func getPageCount(firstpage []uint8) int {
 
 // Gets the body of a webpage
 func getPage(url string) []uint8 {
+  fmt.Println("getPage:", url)
+
   // SSL config
   tlsConfig := &tls.Config{
     InsecureSkipVerify: true,
