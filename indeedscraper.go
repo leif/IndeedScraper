@@ -102,10 +102,16 @@ func getPage(url string) []uint8 {
   client := http.Client{Transport: transport}
 
   // Get page for search term
-  resp, _ := client.Get(url)
+
+  resp, err := client.Get(url)
+
+  if err != nil {
+      fmt.Println("getPage ERROR:", err)
+      fmt.Println("error handling not implemented; we'll now crash")
+  }
+
   defer resp.Body.Close()
   body, _ := ioutil.ReadAll(resp.Body)
-  
   return body
 }
 
