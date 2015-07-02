@@ -97,6 +97,7 @@ func getPage(url string) []uint8 {
     InsecureSkipVerify: true,
   }
   transport := &http.Transport{
+    Proxy: http.ProxyFromEnvironment,
     TLSClientConfig: tlsConfig,
   }
   client := http.Client{Transport: transport}
