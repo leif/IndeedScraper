@@ -56,7 +56,7 @@ func GetResumes(searchterm string, location string) string {
 // Gets the results for a single page
 func getResults(resultsurl string) {
   body := getPage(resultsurl)
-  
+
 	// Get a list of all profile links on page
 	doc, _ := gokogiri.ParseHtml(body)
 	results, _ := doc.NodeById("results").Search("//li[@itemtype='http://schema.org/Person']")
@@ -73,17 +73,17 @@ func getPageCount(firstpage []uint8) int {
 	parsed, _ := gokogiri.ParseHtml(firstpage)
 	numresults, _ := parsed.Search("//div[@id='result_count']")
   resultnums := strings.Split(numresults[0].InnerHtml(), " ")
-  
+
   var num int
   if len(resultnums) >= 2 {
     num, _ = strconv.Atoi(resultnums[1])
   }
-  
+
   numpages := num/50
   if num % 50 != 0 {
     numpages += 1
   }
-  
+
 	return numpages
 }
 
@@ -97,7 +97,7 @@ func getPage(url string) []uint8 {
     TLSClientConfig: tlsConfig,
   }
   client := http.Client{Transport: transport}
-  
+
   // Get page for search term
   resp, _ := client.Get(url)
   defer resp.Body.Close()
@@ -110,6 +110,6 @@ func getPage(url string) []uint8 {
 func cleanString(input_term string) string {
   outstr := strings.Replace(input_term, " ", "+", -1)
   outstr = strings.Replace(outstr, ",", "%2C", -1)
-  
+
   return outstr
 }
